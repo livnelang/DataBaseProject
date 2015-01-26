@@ -84,52 +84,54 @@
                 </ul>
             </div>
         </div>
-
     </div>
-    <main>
-        <div class="panel panel-default data-content">
-            <div class="panel-heading">
-                <h3 class="panel-title">Our Positions</h3>
-            </div>
-            <table class="table">
-                <tr>
-                    <th>Code</th>
-                    <th>Description</th>
-                    <th>Salary</th>
-                </tr>
-                <?php
-                $servername = "localhost";
-                $username = "apple";
-                $password = "pie";
-                $dbname = "mydb";
-                $conn = mysqli_connect($servername, $username, $password, $dbname);
-                $sql = "SELECT * FROM position";
-                $result = mysqli_query($conn, $sql);
-                if (mysqli_num_rows($result) > 0) {
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        echo "<td>" . $row["code"] . "</td>" .
-                            "<td>" . $row["description"] . "</td>" .
-                            "<td>" .$row["salary"]. "</td>" .
-                            "</tr>";
+
+        <main>
+            <div class="panel panel-default data-content">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Our Customers</h3>
+                </div>
+                <table class="table">
+                    <tr>
+                        <th>Customer Id</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Phone</th>
+                    </tr>
+                    <?php
+                    $servername = "localhost";
+                    $username = "apple";
+                    $password = "pie";
+                    $dbname = "mydb";
+                    $conn = mysqli_connect($servername, $username, $password, $dbname);
+                    $sql = "SELECT * FROM customer";
+                    $result = mysqli_query($conn, $sql);
+                    if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo "<td>" . $row["idCustomer"] . "</td>" .
+                                "<td>" . $row["name"] . "</td>" .
+                                "<td>" .$row["family"]. "</td>" .
+                                "<td>" .$row["phone"]. "</td>" .
+                                "</tr>";
+                        }
                     }
-                }
-                else {
-                    echo "0 results";
-                }
+                    else {
+                        echo "0 results";
+                    }
 
-                mysqli_close($conn);
+                    mysqli_close($conn);
 
-                ?>
-            </table>
-        </div>
-    </main>
-
+                    ?>
+                </table>
+            </div>
+        </main>
 
 
 
 
 
-</div>    <!-- Close Wrapper Div -->
+
+    </div>    <!-- Close Wrapper Div -->
 </body>
 
 </html>

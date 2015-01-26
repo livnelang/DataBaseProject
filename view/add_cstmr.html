@@ -84,52 +84,48 @@
                 </ul>
             </div>
         </div>
+   </div>
 
-    </div>
-    <main>
-        <div class="panel panel-default data-content">
-            <div class="panel-heading">
-                <h3 class="panel-title">Our Positions</h3>
+        <main>
+            <div class="panel panel-default data-content">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Add New Customer</h3>
+                </div>
+                <div class="panel-body">
+                    <form action="../control/add_cstmr.php" method="post">
+                        <div class="form-group col-xs-3 user-list">
+                            <label>Id</label>
+                            <input type="number" required="Must enter a value" class="form-control" name="id" placeholder="Enter Id">
+                        </div>
+                            <div class="form-group col-xs-3 user-list">
+                                <label>First Name</label>
+                                <input type="text" required="Must enter a value" class="form-control" name="fname" placeholder="Enter Name">
+                            </div>
+                                <div class="form-group col-xs-3 user-list">
+                                    <label>Last Name</label>
+                                    <input type="text" required="Must enter a value" class="form-control" name="lname" placeholder="Enter Last Name">
+                                </div>
+                                    <div class="form-group col-xs-3 user-list">
+                                        <label>Phone</label>
+                                        <input type="number" required="Must enter a value" class="form-control" name="phone" placeholder="Enter Phone">
+                                    </div>
+                        <div class="clear"></div>
+                        <div class="form-group col-xs-3 user-list">
+                            <button type="submit" class="btn btn-default">Add Customer</button>
+                        </div>
+
+                    </form>
+                </div>
+
             </div>
-            <table class="table">
-                <tr>
-                    <th>Code</th>
-                    <th>Description</th>
-                    <th>Salary</th>
-                </tr>
-                <?php
-                $servername = "localhost";
-                $username = "apple";
-                $password = "pie";
-                $dbname = "mydb";
-                $conn = mysqli_connect($servername, $username, $password, $dbname);
-                $sql = "SELECT * FROM position";
-                $result = mysqli_query($conn, $sql);
-                if (mysqli_num_rows($result) > 0) {
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        echo "<td>" . $row["code"] . "</td>" .
-                            "<td>" . $row["description"] . "</td>" .
-                            "<td>" .$row["salary"]. "</td>" .
-                            "</tr>";
-                    }
-                }
-                else {
-                    echo "0 results";
-                }
-
-                mysqli_close($conn);
-
-                ?>
-            </table>
-        </div>
-    </main>
+        </main>
 
 
 
 
 
 
-</div>    <!-- Close Wrapper Div -->
+    </div>    <!-- Close Wrapper Div -->
 </body>
 
 </html>

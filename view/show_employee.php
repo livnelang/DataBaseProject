@@ -49,6 +49,13 @@
                         </ul>
                     </li>
                     <li class="dropdown">
+                        <a href="show_positions.php" class="dropdown-toggle" data-toggle="dropdown">Customers<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="show_cstmrs.php">Show Customers</a></li>
+                            <li><a href="add_cstmr.html">Add Customer</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="#">Action</a></li>
