@@ -1,0 +1,39 @@
+
+#wrapper {
+    position:relative;
+    /*border:0px solid;*/
+    max-width : 1000px;
+    min-height: 400px;
+    margin : auto;
+    margin-top:30px;
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+}
+
+.data-content {
+    position:relative;
+    margin:auto;
+    width:900px;
+}
+
+.clear {
+    clear:both;
+}
+
+.sql_text {
+    float:left;
+}
+
+.sql_answer {
+    float:right;
+}
+
+.user-list{
+    padding:10px;
+    display:block;
+}
+
+.select_dec {
+    text-align: center;
+}
