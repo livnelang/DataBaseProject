@@ -9,6 +9,7 @@
     <!-- Bootstrap-CSS & General CSS -->
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link href='http://fonts.googleapis.com/css?family=Alef' rel='stylesheet' type='text/css'>
 
 </head>
 
@@ -49,12 +50,26 @@
                             </ul>
                         </li>
                             <li class="dropdown">
+                                <a href="show_positions.php" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="biggest_event.php">Biggest Event</a></li>
+                                    <li><a href="time_events.php">Events By Time</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
                                 <a href="show_positions.php" class="dropdown-toggle" data-toggle="dropdown">Customers<b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="show_cstmrs.php">Show Customers</a></li>
                                     <li><a href="add_cstmr.html">Add Customer</a></li>
                                 </ul>
                             </li>
+                                <li class="dropdown">
+                                    <a href="show_positions.php" class="dropdown-toggle" data-toggle="dropdown">Orders<b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="show_orders.php">Show Orders</a></li>
+                                        <li><a href="add_order.php">Add Order</a></li>
+                                    </ul>
+                                </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -89,38 +104,20 @@
     <main>
         <div class="panel panel-default data-content">
             <div class="panel-heading">
-                <h3 class="panel-title">Halls Available</h3>
+                <h3 class="panel-title">Welcome</h3>
             </div>
-            <table class="table">
-                <tr>
-                <th>Code</th>
-                <th>Hall Name</th>
-                <th>Capacity</th>
-                </tr>
-                <?php
-                $servername = "localhost";
-                $username = "apple";
-                $password = "pie";
-                $dbname = "mydb";
-                $conn = mysqli_connect($servername, $username, $password, $dbname);
-                $sql = "SELECT * FROM hall";
-                $result = mysqli_query($conn, $sql);
-                if (mysqli_num_rows($result) > 0) {
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        echo "<td>" . $row["code"] . "</td>" .
-                            "<td>" . $row["name"] . "</td>" .
-                            "<td>" .$row["capacity"]. "</td>" .
-                            "</tr>";
-                    }
-                }
-                else {
-                    echo "0 results";
-                }
+                <div class="panel-body">
+                    <article id="welcome_section"><h2>Welcome to our DataBase Project</h2>
+                        This Information System provides fully control<br>
+                        its business management and care, <br>
+                        Above menu provides the navigation tools you need <br><br>
 
-                mysqli_close($conn);
+                        Have Fun
+                    </article>
+                        <article id="welcome_pic">
+                        </article>
+                </div>
 
-                ?>
-            </table>
         </div>
     </main>
 

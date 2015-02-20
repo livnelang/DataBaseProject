@@ -49,6 +49,13 @@
                         </ul>
                     </li>
                     <li class="dropdown">
+                        <a href="show_positions.php" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="biggest_event.php">Biggest Event</a></li>
+                            <li><a href="time_events.php">Events By Time</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
                         <a href="show_positions.php" class="dropdown-toggle" data-toggle="dropdown">Customers<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="show_cstmrs.php">Show Customers</a></li>
@@ -93,84 +100,80 @@
         </div>
 
     </div>
-
     <main>
         <div class="panel panel-default data-content">
             <div class="panel-heading">
-                <h3 class="panel-title">Add New Employee</h3>
+                <h3 class="panel-title">Biggest Event</h3>
             </div>
             <div class="panel-body">
-                <form action="../control/add_emp.php" method="post">
-                    <div class="form-group col-xs-3 user-list">
-                        <label>Employee Id</label>
-                        <input type="number" required="Must enter a value" class="form-control" name="id" placeholder="Enter Id">
-                    </div>
-                        <div class="form-group col-xs-3 user-list">
-                            <label>First Name</label>
-                            <input type="text" required="Must enter a value" class="form-control" name="fname" placeholder="Enter Name">
-                        </div>
+                <table class="table">
+                    <tr>
+                        <th>Order Id</th>
+                        <th>Customer Name</th>
+                        <th>Event Type</th>
+                        <th>Date</th>
+                        <th>Capacity</th>
+                    </tr>
+                    <?php
+                    $servername = "localhost";
+                    $username = "apple";
+                    $password = "pie";
+                    $dbname = "mydb";
+                    $conn = mysqli_connect($servername, $username, $password, $dbname);
+                    $sql = "SELECT * FROM mydb.order";
 
-                            <div class="form-group col-xs-3 user-list">
-                                <label>Last Name</label>
-                                <input type="text" required="Must enter a value" class="form-control" name="lname" placeholder="Enter Last Name">
-                            </div>
+                    // prepared SQL Statement
+                    $sql_hall_cap = $conn->prepare("SELECT hall.capacity FROM hall WHERE code=?");
+                    $result = mysqli_query($conn, $sql);
+                    $max_order_code;
+                    $max_cap = 0;
+                    $cap;
+                    // get all hall codes from Hall
+                    if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            $sql_hall_cap->bind_param("s",$row["Hall_Code"]);
+                            /* execute query */
+                            $sql_hall_cap->execute();
+                            /* bind result variables */
+                            $cap = $sql_hall_cap->get_result()->fetch_row();
+                            $cap = $cap[0];
+                            if($cap>$max_cap) {
+                                $max_cap = $cap;
+                                $max_order_code = $row["idOrder"];
+                            }
+                        }
+                        //get order details
+                        $sql_select_max_order = "SELECT * FROM mydb.order WHERE idOrder='$max_order_code'";
+                        $result = mysqli_query($conn, $sql);
+                        $row = mysqli_fetch_assoc($result);
 
-                                <div class="form-group col-xs-3 user-list">
-                                    <label>Address</label>
-                                    <input type="text" required="Must enter a value" class="form-control" name="adrs" placeholder="Enter Address">
-                                </div>
-                                    <div class="form-group col-xs-3 user-list">
-                                        <label>Phone</label>
-                                        <input type="number" required="Must enter a value" class="form-control" name="phone" placeholder="Enter Phone">
-                                    </div>
-                                        <div class="form-group col-xs-3 user-list">
-                                            <label>Manager</label> <br>
-                                            <select name="managers" class="select_dec">
-                                            <?php
-                                                $servername = "localhost";
-                                                $username = "apple";
-                                                $password = "pie";
-                                                $dbname = "mydb";
-                                                $conn = mysqli_connect($servername, $username, $password, $dbname);
-                                                $sql = "SELECT * FROM manager";
-                                                $result = mysqli_query($conn, $sql);
-                                                if (mysqli_num_rows($result) > 0) {
-                                                while ($row = mysqli_fetch_assoc($result)) {
-                                                echo "<option value='".$row[idManager]."'>".$row["idManager"]."</option>";
-                                                    }
-                                                }
-                                                else {
-                                                    echo "0 results";
-                                                }
-                                            ?>
-                                                </select>
-                                         </div>
-                                            <div class="form-group col-xs-5 user-list">
-                                                <label>Position</label> <br>
-                                                <select name="position" class="select_dec">
-                                                <?php
-                                                $sql = "SELECT * FROM position";
-                                                $result = mysqli_query($conn, $sql);
-                                                if (mysqli_num_rows($result) > 0) {
-                                                    while ($row = mysqli_fetch_assoc($result)) {
-                                                        echo "<option value='".$row["code"]."'>".$row["description"]."</option>";
-                                                    }
-                                                }
-                                                else {
-                                                    echo "0 results";
-                                                }
+                        // get Customer Name
+                        $sql_customer_fullname = "SELECT customer.name, customer.family FROM mydb.customer WHERE idCustomer= $row[Customer_idCustomer]";
+                        $result = mysqli_query($conn, $sql_customer_fullname);
+                        $customer_row = mysqli_fetch_assoc($result);
 
-                                                    ?>
-                                                </select>
-                                        </div>
 
-                        <div class="clear"></div>
-                        <div class="form-group col-xs-3 user-list">
-                            <button type="submit" class="btn btn-default">Add Employee</button>
-                        </div>
+                        echo "<td>" . $row["idOrder"] . "</td>" .
+                            "<td>" . $customer_row["name"]." ". $customer_row["family"]. "</td>" .
+                            "<td>" . $row["Event_eventCode"] . "</td>" .
+                            "<td>" . $row["Date_date"] . "</td>" .
+                            "<td>" .$max_cap. "</td>" .
+                            "</tr>";
+                    }
 
-                    </form>
-                        <div id="emp_pic" class="add_pic"></div>
+
+
+                    else {
+                        echo "0 results";
+                    }
+
+                    mysqli_close($conn);
+
+                    ?>
+                </table>
+                <article id="big_event">
+
+                </article>
                 </div>
         </div>
     </main>
@@ -182,5 +185,4 @@
 
 </div>    <!-- Close Wrapper Div -->
 </body>
-
 </html>

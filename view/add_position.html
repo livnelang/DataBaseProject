@@ -56,6 +56,13 @@
                         </ul>
                     </li>
                     <li class="dropdown">
+                        <a href="show_positions.php" class="dropdown-toggle" data-toggle="dropdown">Orders<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="show_orders.php">Show Orders</a></li>
+                            <li><a href="add_order.php">Add Order</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="#">Action</a></li>
@@ -84,14 +91,15 @@
                 </ul>
             </div>
         </div>
-</div>
+
+    </div>
     <main>
         <div class="panel panel-default data-content">
             <div class="panel-heading">
                 <h3 class="panel-title">Add New Position</h3>
             </div>
             <div class="panel-body">
-                <form action="../control/add_pos.php" method="post">
+                <form action="" method="post">
                     <div class="form-group col-xs-3 user-list">
                         <label>Code</label>
                         <input type="text" required="Must enter a value" class="form-control" name="code" placeholder="Enter Code">
@@ -112,6 +120,7 @@
                                 </div>
 
                 </form>
+                    <div id="pos_pic" class="add_pic"></div>
             </div>
 
         </div>

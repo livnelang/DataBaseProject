@@ -93,85 +93,47 @@
         </div>
 
     </div>
-
     <main>
         <div class="panel panel-default data-content">
             <div class="panel-heading">
-                <h3 class="panel-title">Add New Employee</h3>
+                <h3 class="panel-title">Orders</h3>
             </div>
-            <div class="panel-body">
-                <form action="../control/add_emp.php" method="post">
-                    <div class="form-group col-xs-3 user-list">
-                        <label>Employee Id</label>
-                        <input type="number" required="Must enter a value" class="form-control" name="id" placeholder="Enter Id">
-                    </div>
-                        <div class="form-group col-xs-3 user-list">
-                            <label>First Name</label>
-                            <input type="text" required="Must enter a value" class="form-control" name="fname" placeholder="Enter Name">
-                        </div>
+            <table class="table">
+                <tr>
+                    <th>Order Id</th>
+                    <th>Event Code</th>
+                    <th>Hall</th>
+                    <th>Date</th>
+                    <th>Customer Id</th>
+                    <th>Manager</th>
+                </tr>
+                <?php
+                $servername = "localhost";
+                $username = "apple";
+                $password = "pie";
+                $dbname = "mydb";
+                $conn = mysqli_connect($servername, $username, $password, $dbname);
+                $sql = "SELECT * FROM mydb.order";
+                $result = mysqli_query($conn, $sql);
+                if (mysqli_num_rows($result) > 0) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        echo "<td>" . $row["idOrder"] . "</td>" .
+                            "<td>" . $row["Event_eventCode"] . "</td>" .
+                            "<td>" .$row["Hall_Code"]. "</td>" .
+                            "<td>" . $row["Date_date"] . "</td>" .
+                            "<td>" .$row["Customer_idCustomer"]. "</td>" .
+                            "<td>" . $row["Manager_idManager"] . "</td>" .
+                            "</tr>";
+                    }
+                }
+                else {
+                    echo "0 results";
+                }
 
-                            <div class="form-group col-xs-3 user-list">
-                                <label>Last Name</label>
-                                <input type="text" required="Must enter a value" class="form-control" name="lname" placeholder="Enter Last Name">
-                            </div>
+                mysqli_close($conn);
 
-                                <div class="form-group col-xs-3 user-list">
-                                    <label>Address</label>
-                                    <input type="text" required="Must enter a value" class="form-control" name="adrs" placeholder="Enter Address">
-                                </div>
-                                    <div class="form-group col-xs-3 user-list">
-                                        <label>Phone</label>
-                                        <input type="number" required="Must enter a value" class="form-control" name="phone" placeholder="Enter Phone">
-                                    </div>
-                                        <div class="form-group col-xs-3 user-list">
-                                            <label>Manager</label> <br>
-                                            <select name="managers" class="select_dec">
-                                            <?php
-                                                $servername = "localhost";
-                                                $username = "apple";
-                                                $password = "pie";
-                                                $dbname = "mydb";
-                                                $conn = mysqli_connect($servername, $username, $password, $dbname);
-                                                $sql = "SELECT * FROM manager";
-                                                $result = mysqli_query($conn, $sql);
-                                                if (mysqli_num_rows($result) > 0) {
-                                                while ($row = mysqli_fetch_assoc($result)) {
-                                                echo "<option value='".$row[idManager]."'>".$row["idManager"]."</option>";
-                                                    }
-                                                }
-                                                else {
-                                                    echo "0 results";
-                                                }
-                                            ?>
-                                                </select>
-                                         </div>
-                                            <div class="form-group col-xs-5 user-list">
-                                                <label>Position</label> <br>
-                                                <select name="position" class="select_dec">
-                                                <?php
-                                                $sql = "SELECT * FROM position";
-                                                $result = mysqli_query($conn, $sql);
-                                                if (mysqli_num_rows($result) > 0) {
-                                                    while ($row = mysqli_fetch_assoc($result)) {
-                                                        echo "<option value='".$row["code"]."'>".$row["description"]."</option>";
-                                                    }
-                                                }
-                                                else {
-                                                    echo "0 results";
-                                                }
-
-                                                    ?>
-                                                </select>
-                                        </div>
-
-                        <div class="clear"></div>
-                        <div class="form-group col-xs-3 user-list">
-                            <button type="submit" class="btn btn-default">Add Employee</button>
-                        </div>
-
-                    </form>
-                        <div id="emp_pic" class="add_pic"></div>
-                </div>
+                ?>
+            </table>
         </div>
     </main>
 

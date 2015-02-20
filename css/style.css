@@ -3,7 +3,7 @@
     position:relative;
     /*border:0px solid;*/
     max-width : 1000px;
-    min-height: 400px;
+    min-height: 500px;
     margin : auto;
     margin-top:30px;
     -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
@@ -36,4 +36,60 @@
 
 .select_dec {
     text-align: center;
+}
+
+.add_pic {
+    position:relative;
+    margin-right: 20px;
+    display:inline;
+    width:292px;
+    height:150px;
+    float:right;
+    background-image: url('../img/sign_event.png');
+    background-repeat: no-repeat;
+}
+
+#pos_pic {
+    background-image: url('../img/note.png');
+}
+
+#emp_pic {
+    background-image: url('../img/hiring.png');
+}
+
+#time_pic {
+    background-image: url('../img/dates.png');
+}
+
+#cstmr_pic {
+    background-image: url('../img/customer.png');
+    width:256px;
+    height:256px;
+}
+
+#welcome_section {
+    font-family: Alef;
+    font-size: 20px;
+    width:50%;
+    float:left;
+}
+
+#welcome_pic {
+    background-image: url('../img/welcome-sign.png');
+    background-repeat: no-repeat;
+    position:relative;
+    width:300px;
+    height:225px;
+    margin-left: 64px;
+    float:left;
+}
+
+#big_event {
+    background-image: url('../img/party.png');
+    background-repeat: no-repeat;
+    position:relative;
+    margin:0px auto;
+    width:300px;
+    height:250px;
+    display:block;
 }

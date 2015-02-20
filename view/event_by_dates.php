@@ -93,85 +93,74 @@
         </div>
 
     </div>
-
     <main>
         <div class="panel panel-default data-content">
             <div class="panel-heading">
-                <h3 class="panel-title">Add New Employee</h3>
+                <h3 class="panel-title">Events By Date</h3>
             </div>
-            <div class="panel-body">
-                <form action="../control/add_emp.php" method="post">
-                    <div class="form-group col-xs-3 user-list">
-                        <label>Employee Id</label>
-                        <input type="number" required="Must enter a value" class="form-control" name="id" placeholder="Enter Id">
-                    </div>
-                        <div class="form-group col-xs-3 user-list">
-                            <label>First Name</label>
-                            <input type="text" required="Must enter a value" class="form-control" name="fname" placeholder="Enter Name">
-                        </div>
+            <table class="table">
+                <tr>
+                    <th>Order Id</th>
+                    <th>Customer Name</th>
+                    <th>Event Type</th>
+                    <th>Date</th>
+                    <th>Capacity</th>
+                </tr>
+                <?php
 
-                            <div class="form-group col-xs-3 user-list">
-                                <label>Last Name</label>
-                                <input type="text" required="Must enter a value" class="form-control" name="lname" placeholder="Enter Last Name">
-                            </div>
+                function check_in_range($start_date, $end_date, $current_order)
+                {
+                    // Convert to timestamp
+                    $start_ts = strtotime($start_date);
+                    $end_ts = strtotime($end_date);
+                    $current = strtotime($current_order);
 
-                                <div class="form-group col-xs-3 user-list">
-                                    <label>Address</label>
-                                    <input type="text" required="Must enter a value" class="form-control" name="adrs" placeholder="Enter Address">
-                                </div>
-                                    <div class="form-group col-xs-3 user-list">
-                                        <label>Phone</label>
-                                        <input type="number" required="Must enter a value" class="form-control" name="phone" placeholder="Enter Phone">
-                                    </div>
-                                        <div class="form-group col-xs-3 user-list">
-                                            <label>Manager</label> <br>
-                                            <select name="managers" class="select_dec">
-                                            <?php
-                                                $servername = "localhost";
-                                                $username = "apple";
-                                                $password = "pie";
-                                                $dbname = "mydb";
-                                                $conn = mysqli_connect($servername, $username, $password, $dbname);
-                                                $sql = "SELECT * FROM manager";
-                                                $result = mysqli_query($conn, $sql);
-                                                if (mysqli_num_rows($result) > 0) {
-                                                while ($row = mysqli_fetch_assoc($result)) {
-                                                echo "<option value='".$row[idManager]."'>".$row["idManager"]."</option>";
-                                                    }
-                                                }
-                                                else {
-                                                    echo "0 results";
-                                                }
-                                            ?>
-                                                </select>
-                                         </div>
-                                            <div class="form-group col-xs-5 user-list">
-                                                <label>Position</label> <br>
-                                                <select name="position" class="select_dec">
-                                                <?php
-                                                $sql = "SELECT * FROM position";
-                                                $result = mysqli_query($conn, $sql);
-                                                if (mysqli_num_rows($result) > 0) {
-                                                    while ($row = mysqli_fetch_assoc($result)) {
-                                                        echo "<option value='".$row["code"]."'>".$row["description"]."</option>";
-                                                    }
-                                                }
-                                                else {
-                                                    echo "0 results";
-                                                }
+                    // Check that user date is between start & end
+                    return (($current >= $start_ts) && ($current <= $end_ts));
+                }
 
-                                                    ?>
-                                                </select>
-                                        </div>
+                $servername = "localhost";
+                $username = "apple";
+                $password = "pie";
+                $dbname = "mydb";
+                $conn = mysqli_connect($servername, $username, $password, $dbname);
+                // Get From & To Dates Parameters From Request
+                $from = $_POST["from_date"];
+                $to = $_POST["to_date"];
 
-                        <div class="clear"></div>
-                        <div class="form-group col-xs-3 user-list">
-                            <button type="submit" class="btn btn-default">Add Employee</button>
-                        </div>
+                // Get All Events (Orders)
+                $sql = "SELECT * FROM mydb.order";
+                $result = mysqli_query($conn, $sql);
 
-                    </form>
-                        <div id="emp_pic" class="add_pic"></div>
-                </div>
+                // Check If event is in range Loop, if so -> add it to range orders
+                $range_orders = [];
+                if (mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                        if(check_in_range($from,$to,$row["Date_date"]) ) {
+                            // push order into range orders
+                            array_push($range_orders,$row);
+                        }
+                    }
+                }
+
+                // If $range_orders != null, lets print the results
+                if ( sizeof($range_orders) >  0  ) {
+                    foreach( $range_orders as $row ) {
+
+                        echo "<tr><td>" . $row["idOrder"] . "</td>" .
+                            "<td>" . $row["Customer_idCustomer"]."</td>".
+                            "<td>" . $row["Event_eventCode"] . "</td>" .
+                            "<td>" . $row["Date_date"] . "</td>" .
+                            "<td>" .$row["Date_date"]. "</td>" .
+                            "</tr>";
+                    }
+                }
+
+
+                mysqli_close($conn);
+
+                ?>
+            </table>
         </div>
     </main>
 

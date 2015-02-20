@@ -18,7 +18,8 @@
     <table name="date" schema="" catalog="mydb" type="TABLE">
       <column name="Date" sqlType="DATE" precision="10" scale="0" nullable="false" jdbcType="91"/>
       <primary-key name="PRIMARY" columns="Date"/>
-      <exported-key name="fk_TackPlaceIn_Date1" table="tackplacein" schema="" catalog="mydb" columns="Date_Date"/>
+      <exported-key name="fk_Date_date" table="order" schema="" catalog="mydb" columns="Date_date"/>
+      <exported-key name="fk_date" table="tackplacein" schema="" catalog="mydb" columns="Date_Date"/>
     </table>
     <table name="dish" schema="" catalog="mydb" type="TABLE">
       <column name="code" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
@@ -44,25 +45,18 @@
     </table>
     <table name="event" schema="" catalog="mydb" type="TABLE">
       <column name="eventCode" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <column name="Order_idOrder" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <column name="Order_Customer_idCustomer" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <column name="Order_Manager_idManager" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <column name="TackPlaceIn_Hall_code" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <column name="TackPlaceIn_Date_Date" sqlType="DATE" precision="10" scale="0" nullable="false" jdbcType="91"/>
-      <primary-key name="PRIMARY" columns="eventCode,Order_idOrder,Order_Customer_idCustomer,Order_Manager_idManager,TackPlaceIn_Hall_code,TackPlaceIn_Date_Date"/>
-      <foreign-key name="fk_Order_has_TackPlaceIn_Order1" columns="Order_idOrder,Order_Customer_idCustomer,Order_Manager_idManager" ref-table="order" ref-schema="" ref-catalog="mydb" ref-columns="idOrder,Customer_idCustomer,Manager_idManager" update-rule="3" delete-rule="3" deferrability="2"/>
-      <foreign-key name="fk_Order_has_TackPlaceIn_TackPlaceIn1" columns="TackPlaceIn_Hall_code,TackPlaceIn_Date_Date" ref-table="tackplacein" ref-schema="" ref-catalog="mydb" ref-columns="Hall_code,Date_Date" update-rule="3" delete-rule="3" deferrability="2"/>
-      <index name="fk_Order_has_TackPlaceIn_Order1" unique="false" columns="Order_idOrder,Order_Customer_idCustomer,Order_Manager_idManager"/>
-      <index name="fk_Order_has_TackPlaceIn_Order1_idx" unique="false" columns="Order_idOrder,Order_Customer_idCustomer,eventCode,Order_Manager_idManager"/>
-      <index name="fk_Order_has_TackPlaceIn_TackPlaceIn1_idx" unique="false" columns="TackPlaceIn_Hall_code,TackPlaceIn_Date_Date"/>
+      <column name="name" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="eventCode"/>
+      <exported-key name="fk_Event_code" table="order" schema="" catalog="mydb" columns="Event_eventCode"/>
     </table>
     <table name="hall" schema="" catalog="mydb" type="TABLE">
       <column name="code" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="name" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
-      <column name="capacity" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="capacity" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="code"/>
       <exported-key name="fk_Hall_has_Menu_Hall1" table="offer" schema="" catalog="mydb" columns="Hall_code"/>
-      <exported-key name="fk_TackPlaceIn_Hall1" table="tackplacein" schema="" catalog="mydb" columns="Hall_code"/>
+      <exported-key name="fk_Hall_Code" table="order" schema="" catalog="mydb" columns="Hall_Code"/>
+      <exported-key name="fk_hall" table="tackplacein" schema="" catalog="mydb" columns="Hall_code"/>
       <exported-key name="fk_Employee_has_Hall_Hall1" table="works" schema="" catalog="mydb" columns="Hall_code"/>
     </table>
     <table name="include" schema="" catalog="mydb" type="TABLE">
@@ -86,9 +80,11 @@
     </table>
     <table name="menu" schema="" catalog="mydb" type="TABLE">
       <column name="code" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="price" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="code"/>
       <exported-key name="fk_Dish_has_Menu_Menu1" table="include" schema="" catalog="mydb" columns="Menu_code"/>
       <exported-key name="fk_Hall_has_Menu_Menu1" table="offer" schema="" catalog="mydb" columns="Menu_code"/>
+      <exported-key name="fk_menu" table="order" schema="" catalog="mydb" columns="Menu_code"/>
     </table>
     <table name="offer" schema="" catalog="mydb" type="TABLE">
       <column name="Hall_code" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
@@ -100,35 +96,36 @@
       <index name="fk_Hall_has_Menu_Menu1_idx" unique="false" columns="Menu_code"/>
     </table>
     <table name="order" schema="" catalog="mydb" type="TABLE">
-      <column name="idOrder" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="idOrder" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="Event_eventCode" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="Hall_Code" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="Date_date" sqlType="DATE" precision="10" scale="0" nullable="false" jdbcType="91"/>
+      <column name="Menu_code" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="Customer_idCustomer" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="Manager_idManager" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <primary-key name="PRIMARY" columns="idOrder,Customer_idCustomer,Manager_idManager"/>
+      <primary-key name="PRIMARY" columns="idOrder"/>
+      <foreign-key name="fk_Date_date" columns="Date_date" ref-table="date" ref-schema="" ref-catalog="mydb" ref-columns="Date" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="fk_Event_code" columns="Event_eventCode" ref-table="event" ref-schema="" ref-catalog="mydb" ref-columns="eventCode" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_Hall_Code" columns="Hall_Code" ref-table="hall" ref-schema="" ref-catalog="mydb" ref-columns="code" update-rule="0" delete-rule="0" deferrability="2"/>
       <foreign-key name="fk_Order_Customer" columns="Customer_idCustomer" ref-table="customer" ref-schema="" ref-catalog="mydb" ref-columns="idCustomer" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="fk_Order_Manager1" columns="Manager_idManager" ref-table="manager" ref-schema="" ref-catalog="mydb" ref-columns="idManager" update-rule="3" delete-rule="3" deferrability="2"/>
-      <exported-key name="fk_Order_has_TackPlaceIn_Order1" table="event" schema="" catalog="mydb" columns="Order_idOrder,Order_Customer_idCustomer,Order_Manager_idManager"/>
+      <foreign-key name="fk_menu" columns="Menu_code" ref-table="menu" ref-schema="" ref-catalog="mydb" ref-columns="code" update-rule="3" delete-rule="3" deferrability="2"/>
       <index name="fk_Order_Customer_idx" unique="false" columns="Customer_idCustomer"/>
       <index name="fk_Order_Manager1_idx" unique="false" columns="Manager_idManager"/>
     </table>
     <table name="position" schema="" catalog="mydb" type="TABLE">
       <column name="code" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <column name="description" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="description" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
       <column name="salary" sqlType="DOUBLE" precision="22" scale="0" nullable="true" jdbcType="8"/>
-      <column name="Works_Employee_idEmployee" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <column name="Works_Hall_code" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <primary-key name="PRIMARY" columns="code,Works_Employee_idEmployee,Works_Hall_code"/>
-      <foreign-key name="fk_Position_Works1" columns="Works_Employee_idEmployee,Works_Hall_code" ref-table="works" ref-schema="" ref-catalog="mydb" ref-columns="Employee_idEmployee,Hall_code" update-rule="3" delete-rule="3" deferrability="2"/>
+      <primary-key name="PRIMARY" columns="code"/>
       <exported-key name="employee_ibfk_1" table="employee" schema="" catalog="mydb" columns="Position_code"/>
-      <index name="fk_Position_Works1_idx" unique="false" columns="Works_Employee_idEmployee,Works_Hall_code"/>
     </table>
     <table name="tackplacein" schema="" catalog="mydb" type="TABLE">
       <column name="Hall_code" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="Date_Date" sqlType="DATE" precision="10" scale="0" nullable="false" jdbcType="91"/>
       <primary-key name="PRIMARY" columns="Hall_code,Date_Date"/>
-      <foreign-key name="fk_TackPlaceIn_Date1" columns="Date_Date" ref-table="date" ref-schema="" ref-catalog="mydb" ref-columns="Date" update-rule="3" delete-rule="3" deferrability="2"/>
-      <foreign-key name="fk_TackPlaceIn_Hall1" columns="Hall_code" ref-table="hall" ref-schema="" ref-catalog="mydb" ref-columns="code" update-rule="3" delete-rule="3" deferrability="2"/>
-      <exported-key name="fk_Order_has_TackPlaceIn_TackPlaceIn1" table="event" schema="" catalog="mydb" columns="TackPlaceIn_Hall_code,TackPlaceIn_Date_Date"/>
-      <index name="fk_TackPlaceIn_Date1_idx" unique="false" columns="Date_Date"/>
+      <foreign-key name="fk_date" columns="Date_Date" ref-table="date" ref-schema="" ref-catalog="mydb" ref-columns="Date" update-rule="0" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_hall" columns="Hall_code" ref-table="hall" ref-schema="" ref-catalog="mydb" ref-columns="code" update-rule="3" delete-rule="3" deferrability="2"/>
     </table>
     <table name="works" schema="" catalog="mydb" type="TABLE">
       <column name="Employee_idEmployee" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
@@ -136,7 +133,6 @@
       <primary-key name="PRIMARY" columns="Employee_idEmployee,Hall_code"/>
       <foreign-key name="fk_Employee_has_Hall_Employee1" columns="Employee_idEmployee" ref-table="employee" ref-schema="" ref-catalog="mydb" ref-columns="idEmployee" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="fk_Employee_has_Hall_Hall1" columns="Hall_code" ref-table="hall" ref-schema="" ref-catalog="mydb" ref-columns="code" update-rule="3" delete-rule="3" deferrability="2"/>
-      <exported-key name="fk_Position_Works1" table="position" schema="" catalog="mydb" columns="Works_Employee_idEmployee,Works_Hall_code"/>
       <index name="fk_Employee_has_Hall_Employee1_idx" unique="false" columns="Employee_idEmployee"/>
       <index name="fk_Employee_has_Hall_Hall1_idx" unique="false" columns="Hall_code"/>
     </table>
