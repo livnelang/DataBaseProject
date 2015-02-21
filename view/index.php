@@ -54,6 +54,7 @@
                                 <ul class="dropdown-menu">
                                     <li><a href="biggest_event.php">Biggest Event</a></li>
                                     <li><a href="time_events.php">Events By Time</a></li>
+                                    <li><a href="hall_events.php">Events By Hall</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown">

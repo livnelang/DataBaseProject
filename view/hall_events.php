@@ -49,6 +49,13 @@
                         </ul>
                     </li>
                     <li class="dropdown">
+                        <a href="show_positions.php" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="biggest_event.php">Biggest Event</a></li>
+                            <li><a href="time_events.php">Events By Time</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
                         <a href="show_positions.php" class="dropdown-toggle" data-toggle="dropdown">Customers<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="show_cstmrs.php">Show Customers</a></li>
@@ -96,86 +103,53 @@
     <main>
         <div class="panel panel-default data-content">
             <div class="panel-heading">
-                <h3 class="panel-title">Events By Date</h3>
+                <h3 class="panel-title">Events By Hall</h3>
             </div>
-            <table class="table">
-                <tr>
-                    <th>Order Id</th>
-                    <th>Customer Name</th>
-                    <th>Event Type</th>
-                    <th>Date</th>
-                    <th>Capacity</th>
-                </tr>
-                <?php
+            <div class="panel-body">
 
-                function check_in_range($start_date, $end_date, $current_order)
-                {
-                    // Convert to timestamp
-                    $start_ts = strtotime($start_date);
-                    $end_ts = strtotime($end_date);
-                    $current = strtotime($current_order);
+                <form action="show_hall_events.php" method="post">
 
-                    // Check that user date is between start & end
-                    return (($current >= $start_ts) && ($current <= $end_ts));
-                }
+                    <?php
 
-                $servername = "localhost";
-                $username = "apple";
-                $password = "pie";
-                $dbname = "mydb";
-                $conn = mysqli_connect($servername, $username, $password, $dbname);
-                // Get From & To Dates Parameters From Request
-                $from = $_POST["from_date"];
-                $to = $_POST["to_date"];
+                    // connection details
+                    $servername = "localhost";
+                    $username = "apple";
+                    $password = "pie";
+                    $dbname = "mydb";
 
-                // Get All Events (Orders)
-                $sql = "SELECT * FROM mydb.order";
-                $result = mysqli_query($conn, $sql);
+                    //get all dates
+                    $conn = mysqli_connect($servername, $username, $password, $dbname);
+                    $sql = "SELECT * FROM hall";
+                    $result = mysqli_query($conn, $sql);
+                    sort($result->fetch_fields());
+                    /*while ($row = mysqli_fetch_assoc($result)) {
+                        echo "$row[Date]"."\r\n";
+                    }*/
+                    ?>
 
-                // Check If event is in range Loop, if so -> add it to range orders
-                $range_orders = [];
-                if (mysqli_num_rows($result) > 0) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                        if(check_in_range($from,$to,$row["Date_date"]) ) {
-                            // push order into range orders
-                            array_push($range_orders,$row);
-                        }
-                    }
-                }
+                    <div class="form-group col-xs-3 user-list">
+                        <label>Choose Hall</label>
+                        <select class="select_dec" name="hall_name">
+                            <?php
+                            if (mysqli_num_rows($result) > 0) {
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    echo "<option value='".$row[name]."'>".$row[name]."</option>";
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
 
-                // If $range_orders != null, lets print the results
-                if ( sizeof($range_orders) >  0  ) {
-                    foreach( $range_orders as $row ) {
+                    <div class="clear"></div>
+                    <div class="form-group col-xs-3 user-list">
+                        <button type="submit" class="btn btn-default">Get Events</button>
+                    </div>
 
-                        // get Customer Name
-                        $sql_customer_fullname = "SELECT customer.name, customer.family FROM mydb.customer WHERE idCustomer= $row[Customer_idCustomer]";
-                        $result = mysqli_query($conn, $sql_customer_fullname);
-                        $customer_row = mysqli_fetch_assoc($result);
-                        // get Event Name
-                        $sql_event_name = "SELECT event.name FROM event WHERE eventCode= $row[Event_eventCode]";
-                        $event_result = mysqli_query($conn, $sql_event_name);
-                        $event_name = mysqli_fetch_assoc($event_result);
-                        // get Capacity Number
-                        $sql_capacity_num = "SELECT hall.capacity FROM hall WHERE hall.code= $row[Hall_Code]";
-                        $capacity_result = mysqli_query($conn, $sql_capacity_num);
-                        $capacity_num = mysqli_fetch_assoc($capacity_result);
+                </form>
+                <div id="hall_pic" class="add_pic"></div>
 
+            </div>
 
-
-                        echo "<tr><td>" . $row["idOrder"] . "</td>" .
-                            "<td>" .  $customer_row["name"]." ". $customer_row["family"]."</td>".
-                            "<td>" . $event_name["name"] . "</td>" .
-                            "<td>" . $row["Date_date"] . "</td>" .
-                            "<td>" . $capacity_num["capacity"]. "</td>" .
-                            "</tr>";
-                    }
-                }
-
-
-                mysqli_close($conn);
-
-                ?>
-            </table>
         </div>
     </main>
 

@@ -61,6 +61,14 @@
     background-image: url('../img/dates.png');
 }
 
+#hall_pic {
+    background-image: url('../img/hall.png');
+    width:250px;
+    height:250px;
+    margin-right: 64px;
+    margin-top:-60px;
+}
+
 #cstmr_pic {
     background-image: url('../img/customer.png');
     width:256px;

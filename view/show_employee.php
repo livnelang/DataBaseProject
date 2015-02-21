@@ -106,7 +106,9 @@
                     <th>Last Name</th>
                     <th>Address</th>
                     <th>Phone</th>
+                    <th>Position</th>
                     <th>Manager Id</th>
+                    <th>Edit</th>
                 </tr>
                 <?php
                 $servername = "localhost";
@@ -118,11 +120,17 @@
                 $result = mysqli_query($conn, $sql);
                 if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_assoc($result)) {
+                        // Gets Position Name
+                        $position_sql = "SELECT * FROM position WHERE code=$row[Position_code]" ;
+                        $position_result = mysqli_query($conn, $position_sql);
+                        $pos = mysqli_fetch_assoc($position_result);
+
                         echo "<td>" . $row["idEmployee"] . "</td>" .
                             "<td>" . $row["name"] . "</td>" .
                             "<td>" .$row["family"]. "</td>" .
                             "<td>" .$row["address"]. "</td>" .
                             "<td>" .$row["phone"]. "</td>" .
+                            "<td>" .$pos["description"]. "</td>" .
                             "<td>" .$row["Manager_idManager"]. "</td>" .
                             "</tr>";
                     }

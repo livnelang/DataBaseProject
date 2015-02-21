@@ -96,7 +96,7 @@
     <main>
         <div class="panel panel-default data-content">
             <div class="panel-heading">
-                <h3 class="panel-title">Events By Date</h3>
+                <h3 class="panel-title">Events By Hall</h3>
             </div>
             <table class="table">
                 <tr>
@@ -108,45 +108,29 @@
                 </tr>
                 <?php
 
-                function check_in_range($start_date, $end_date, $current_order)
-                {
-                    // Convert to timestamp
-                    $start_ts = strtotime($start_date);
-                    $end_ts = strtotime($end_date);
-                    $current = strtotime($current_order);
-
-                    // Check that user date is between start & end
-                    return (($current >= $start_ts) && ($current <= $end_ts));
-                }
-
                 $servername = "localhost";
                 $username = "apple";
                 $password = "pie";
                 $dbname = "mydb";
                 $conn = mysqli_connect($servername, $username, $password, $dbname);
-                // Get From & To Dates Parameters From Request
-                $from = $_POST["from_date"];
-                $to = $_POST["to_date"];
+                // Get Hall Name From Form
+                $hall_name = $_POST["hall_name"];
 
-                // Get All Events (Orders)
-                $sql = "SELECT * FROM mydb.order";
-                $result = mysqli_query($conn, $sql);
+                // Get Hall Code
+                $sql_hall_code = "SELECT hall.code FROM hall WHERE hall.name= '$hall_name' ";
+                $code_result = mysqli_query($conn, $sql_hall_code);
+                $code_row = mysqli_fetch_assoc($code_result);
+
+                // Get All Orders with That Code
+                $sql = "SELECT * FROM mydb.order WHERE order.Hall_Code= $code_row[code]";
+                $orders_result = mysqli_query($conn, $sql);
+
+                //echo mysqli_num_rows($result);
+
 
                 // Check If event is in range Loop, if so -> add it to range orders
-                $range_orders = [];
-                if (mysqli_num_rows($result) > 0) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                        if(check_in_range($from,$to,$row["Date_date"]) ) {
-                            // push order into range orders
-                            array_push($range_orders,$row);
-                        }
-                    }
-                }
-
-                // If $range_orders != null, lets print the results
-                if ( sizeof($range_orders) >  0  ) {
-                    foreach( $range_orders as $row ) {
-
+                if (mysqli_num_rows($orders_result) > 0) {
+                    while ($row = mysqli_fetch_assoc($orders_result)) {
                         // get Customer Name
                         $sql_customer_fullname = "SELECT customer.name, customer.family FROM mydb.customer WHERE idCustomer= $row[Customer_idCustomer]";
                         $result = mysqli_query($conn, $sql_customer_fullname);
@@ -160,8 +144,6 @@
                         $capacity_result = mysqli_query($conn, $sql_capacity_num);
                         $capacity_num = mysqli_fetch_assoc($capacity_result);
 
-
-
                         echo "<tr><td>" . $row["idOrder"] . "</td>" .
                             "<td>" .  $customer_row["name"]." ". $customer_row["family"]."</td>".
                             "<td>" . $event_name["name"] . "</td>" .
@@ -171,10 +153,9 @@
                     }
                 }
 
-
                 mysqli_close($conn);
-
                 ?>
+
             </table>
         </div>
     </main>
