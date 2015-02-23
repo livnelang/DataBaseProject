@@ -3,7 +3,7 @@
     position:relative;
     /*border:0px solid;*/
     max-width : 1000px;
-    min-height: 500px;
+    min-height: 510px;
     margin : auto;
     margin-top:30px;
     -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
@@ -57,6 +57,11 @@
     background-image: url('../img/hiring.png');
 }
 
+#emp_update_pic {
+    background-image: url('../img/emp_update.png');
+    height:260px;
+}
+
 #time_pic {
     background-image: url('../img/dates.png');
 }
@@ -100,4 +105,14 @@
     width:300px;
     height:250px;
     display:block;
+}
+
+.black_gliph {
+    color: black;
+    background:none;
+    border:none;
+}
+
+.span_right {
+    margin-left:60%;
 }

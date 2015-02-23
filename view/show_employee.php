@@ -6,9 +6,11 @@
     <!-- Include all Jquery files as needed -->
     <script src="../js/jquery-2.1.1.min.js"></script>
     <script src="../js/bootstrap.js"></script>
+    <script src="../js/edit_btns.js"></script>
     <!-- Bootstrap-CSS & General CSS -->
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+
 
 </head>
 
@@ -132,6 +134,7 @@
                             "<td>" .$row["phone"]. "</td>" .
                             "<td>" .$pos["description"]. "</td>" .
                             "<td>" .$row["Manager_idManager"]. "</td>" .
+                            "<td><button type=\"button\" name=".$row["idEmployee"]." class=\"black_gliph editbt_emp\"><span class=\"glyphicon glyphicon-list-alt\"></span></button></td>".
                             "</tr>";
                     }
                 }
@@ -145,9 +148,6 @@
             </table>
         </div>
     </main>
-
-
-
 
 
 

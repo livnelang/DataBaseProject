@@ -93,36 +93,94 @@
         </div>
 
     </div>
+
     <main>
         <div class="panel panel-default data-content">
-            <div class="panel-heading">
-                <h3 class="panel-title">Add New Position</h3>
+            <?php
+            // Gets URL Parameter
+            if (isset($_GET['emp_id']))
+            {
+                $id = $_GET['emp_id'];
+            }
+
+           echo  "<div class=\"panel-heading\">".
+                "<h3 class=\"panel-title\">Edit Employee Details       <span class=\"span_right\"> Employee ID: $id</span></h3>";
+            ?>
             </div>
             <div class="panel-body">
-                <form action="../control/add_pos.php" method="post">
+                <form action="../control/update_employee.php" method="post">
+
+                    <?php
+                    $servername = "localhost";
+                    $username = "apple";
+                    $password = "pie";
+                    $dbname = "mydb";
+                    $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+
+                    // Get Current Updated Employee Details
+                    $sql = "SELECT * FROM employee WHERE idEmployee=$id ";
+                    $result = mysqli_query($conn, $sql);
+                    if (mysqli_num_rows($result) > 0) {
+                        $curr_emp = mysqli_fetch_assoc($result);
+                    }
+
+                    ?>
+                    <!-- Hidden Input Field (ID) -->
+                    <input type="hidden" name="id" value=<?php $id ?> >
+
                     <div class="form-group col-xs-3 user-list">
-                        <label>Code</label>
-                        <input type="text" required="Must enter a value" class="form-control" name="code" placeholder="Enter Code">
+                        <label>Manager</label> <br>
+                        <select name="managers" class="select_dec">
+                            <?php
+                            $servername = "localhost";
+                            $username = "apple";
+                            $password = "pie";
+                            $dbname = "mydb";
+                            $conn = mysqli_connect($servername, $username, $password, $dbname);
+                            $sql = "SELECT * FROM manager";
+                            $result = mysqli_query($conn, $sql);
+                            if (mysqli_num_rows($result) > 0) {
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    echo "<option value='".$row[idManager]."'>".$row["idManager"]."</option>";
+                                }
+                            }
+                            else {
+                                echo "0 results";
+                            }
+                            ?>
+                        </select>
                     </div>
+                    <div class="form-group col-xs-5 user-list">
+                        <label>Position</label> <br>
+                        <select name="position" class="select_dec">
+                            <?php
+                            $sql = "SELECT * FROM position";
+                            $result = mysqli_query($conn, $sql);
+                            if (mysqli_num_rows($result) > 0) {
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    echo "<option value='".$row["code"]."'>".$row["description"]."</option>";
+                                }
+                            }
+                            else {
+                                echo "0 results";
+                            }
 
+                            ?>
+                        </select>
+                    </div>
                         <div class="form-group col-xs-3 user-list">
-                            <label>Description</label>
-                            <input type="text" required="Must enter a value" class="form-control" name="desc" placeholder="Enter Description">
+                            <label>Phone</label>
+                            <input type="number" placeholder= <?php echo"$curr_emp[phone]"; ?>. required="Must enter a value" class="form-control" name="phone" placeholder="Enter Phone">
                         </div>
-
-                            <div class="form-group col-xs-3 user-list">
-                                <label>Salary</label>
-                                <input type="number" required="Must enter a value" class="form-control" name="salary" placeholder="Enter Salary">
-                            </div>
-                              <div class="clear"></div>
+                            <div class="clear"></div>
                                 <div class="form-group col-xs-3 user-list">
-                                    <button type="submit" class="btn btn-default">Add Position</button>
+                                    <button type="submit" class="btn btn-default">Update Employee</button>
                                 </div>
 
                 </form>
-                    <div id="pos_pic" class="add_pic"></div>
+                <div id="emp_update_pic" class="add_pic"></div>
             </div>
-
         </div>
     </main>
 
