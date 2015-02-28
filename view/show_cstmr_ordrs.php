@@ -9,7 +9,6 @@
     <!-- Bootstrap-CSS & General CSS -->
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../css/style.css">
-    <link href='http://fonts.googleapis.com/css?family=Alef' rel='stylesheet' type='text/css'>
 
 </head>
 
@@ -39,39 +38,30 @@
                         <a href="show_positions.php" class="dropdown-toggle" data-toggle="dropdown">Employee<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="show_employee.php">Show Employees</a></li>
-                            <li><a href="show_emp_pos.php">Employee-Position</a></li>
                             <li><a href="add_employee.php">Add Employee</a></li>
                         </ul>
                     </li>
-                        <li class="dropdown">
-                            <a href="show_positions.php" class="dropdown-toggle" data-toggle="dropdown">Halls<b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="show_halls.php">Show Halls</a></li>
-                                <li><a href="add_hall.html">Add Hall</a></li>
-                            </ul>
-                        </li>
-                            <li class="dropdown">
-                                <a href="show_positions.php" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="biggest_event.php">Biggest Event</a></li>
-                                    <li><a href="time_events.php">Events By Time</a></li>
-                                    <li><a href="hall_events.php">Events By Hall</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="show_positions.php" class="dropdown-toggle" data-toggle="dropdown">Customers<b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="show_cstmrs.php">Show Customers</a></li>
-                                    <li><a href="add_cstmr.html">Add Customer</a></li>
-                                </ul>
-                            </li>
-                                <li class="dropdown">
-                                    <a href="show_positions.php" class="dropdown-toggle" data-toggle="dropdown">Orders<b class="caret"></b></a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="show_orders.php">Show Orders</a></li>
-                                        <li><a href="add_order.php">Add Order</a></li>
-                                    </ul>
-                                </li>
+                    <li class="dropdown">
+                        <a href="show_positions.php" class="dropdown-toggle" data-toggle="dropdown">Halls<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="show_halls.php">Show Halls</a></li>
+                            <li><a href="add_hall.html">Add Hall</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="show_positions.php" class="dropdown-toggle" data-toggle="dropdown">Customers<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="show_cstmrs.php">Show Customers</a></li>
+                            <li><a href="add_cstmr.html">Add Customer</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="show_positions.php" class="dropdown-toggle" data-toggle="dropdown">Orders<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="show_orders.php">Show Orders</a></li>
+                            <li><a href="add_order.php">Add Order</a></li>
+                        </ul>
+                    </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -84,7 +74,7 @@
                             <li><a href="#">One more separated link</a></li>
                         </ul>
                     </li>
-                   <!-- <li class="col-xs-push-4"><img src="img/mysql_logo1.png"></li> -->
+                    <!-- <li class="col-xs-push-4"><img src="img/mysql_logo1.png"></li> -->
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#">Link</a></li>
@@ -103,23 +93,48 @@
         </div>
 
     </div>
+
     <main>
         <div class="panel panel-default data-content">
             <div class="panel-heading">
-                <h3 class="panel-title">Welcome</h3>
+                <h3 class="panel-title">Customers Join Orders</h3>
             </div>
-                <div class="panel-body">
-                    <article id="welcome_section"><h2>Welcome to our DataBase Project</h2>
-                        This Information System provides fully control<br>
-                        its business management and care, <br>
-                        Above menu provides the navigation tools you need <br><br>
+            <table class="table">
+                <tr>
+                    <th>Customer Id</th>
+                    <th>Customer Name</th>
+                    <th>Event Date</th>
+                    <th>Hall</th>
+                </tr>
+                <?php
+                $servername = "localhost";
+                $username = "apple";
+                $password = "pie";
+                $dbname = "mydb";
+                $conn = mysqli_connect($servername, $username, $password, $dbname);
+                $sql = "SELECT customer.idCustomer,customer.name,order.Date_date,order.Hall_Code
+                        FROM customer
+                        INNER JOIN mydb.order
+                        ON customer.idCustomer=order.idCustomer";
+                $result = mysqli_query($conn, $sql);
+                //echo $result;
+                if (mysqli_num_rows($result) > 0) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        echo "<td>" . $row["idCustomer"] . "</td>" .
+                            "<td>" . $row["name"] . "</td>" .
+                            "<td>" .$row["family"]. "</td>" .
+                            "<td>" .$row["phone"]. "</td>" .
+                            "</tr>";
+                    }
+                }
+                else {
+                    echo "0 results";
+                }
 
-                        Have Fun
-                    </article>
-                        <article id="welcome_pic">
-                        </article>
-                </div>
+                mysqli_close($conn);
 
+                ?>
+            </table>
         </div>
     </main>
 
