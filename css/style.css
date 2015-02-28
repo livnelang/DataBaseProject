@@ -116,3 +116,9 @@
 .span_right {
     margin-left:60%;
 }
+
+#side_title {
+    margin-left:170px ;
+    color:#4582EC;
+    text-align: center;
+}
