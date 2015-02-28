@@ -22,8 +22,13 @@ $pos_code = $_POST["code"];
 $pos_desc = $_POST["desc"];
 $pos_sal = $_POST["salary"];
 // Making The Query
-$sql = "INSERT INTO position (code,description,salary)
-        VALUES ($pos_code,'$pos_desc',$pos_sal)";
+/*$sql = "call positionInsert
+        USING
+        $pos_code,
+        $pos_desc,
+        $pos_sal";*/
+$mysqli = new mysqli();
+$sql =" CALL positionInsert('$pos_code', '$pos_desc', '$pos_sal') ";
 
 //Commit The Query & Check For Results
 if (mysqli_query($conn, $sql)) {
