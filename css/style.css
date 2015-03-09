@@ -11,6 +11,11 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
 }
 
+main {
+    height:100%;
+    overflow:auto ;
+}
+
 .data-content {
     position:relative;
     margin:auto;
@@ -79,6 +84,26 @@
     width:326px;
     height:211px;
     margin-right: 64px;
+}
+
+#emp_work {
+     background-image: url('../img/emp_work.png');
+     width:256px;
+     height:314px;
+     margin-top: -70px;
+ }
+
+#order_emp {
+    background-image: url('../img/ordering.png');
+    width:256px;
+    height:256px;
+    margin-top: 0px;
+}
+
+#emp_list {
+    background-image: url('../img/Team.png');
+    width:256px;
+    height:216px;
 }
 
 #cstmr_pic {

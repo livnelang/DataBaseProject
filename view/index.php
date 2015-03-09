@@ -40,6 +40,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="show_employee.php">Show Employees</a></li>
                             <li><a href="show_emp_pos.php">Employee-Position</a></li>
+                            <li><a href="emp_halls_work.php">Employee WorkPlaces</a></li>
                             <li><a href="add_employee.php">Add Employee</a></li>
                         </ul>
                     </li>
@@ -69,6 +70,7 @@
                                     <a  href="show_positions.php" class="dropdown-toggle" data-toggle="dropdown">Orders<b class="caret"></b></a>
                                     <ul class="dropdown-menu">
                                         <li><a href="show_orders.php">Show Orders</a></li>
+                                        <li><a href="order_employees.php">Show Employees</a></li>
                                         <li><a href="add_order.php">Add Order</a></li>
                                     </ul>
                                 </li>
