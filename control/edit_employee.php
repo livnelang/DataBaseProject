@@ -23,7 +23,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.php">Home</a>
+                <a class="navbar-brand" href="../view/index.php">Home</a>
             </div>
             <div class="navbar-collapse collapse navbar-responsive-collapse">
                 <ul class="nav navbar-nav">
@@ -127,8 +127,8 @@
 
                     ?>
                     <!-- Hidden Input Field (ID) -->
-                    <input type="hidden" name="id" value=<?php $id ?> >
-
+                    <input type="hidden" name="id" value="<?php echo $id; ?>" />
+                   <?php echo $id ?>
                     <div class="form-group col-xs-3 user-list">
                         <label>Manager</label> <br>
                         <select name="managers" class="select_dec">
@@ -142,7 +142,7 @@
                             $result = mysqli_query($conn, $sql);
                             if (mysqli_num_rows($result) > 0) {
                                 while ($row = mysqli_fetch_assoc($result)) {
-                                    echo "<option value='".$row[idManager]."'>".$row["idManager"]."</option>";
+                                    echo "<option value='".$row[idManager]."'>".$row["name"]." ".$row["family"]."</option>";
                                 }
                             }
                             else {

@@ -74,6 +74,13 @@
     margin-top:-60px;
 }
 
+#add_hall_pic {
+    background-image: url('../img/swing_dance.png');
+    width:326px;
+    height:211px;
+    margin-right: 64px;
+}
+
 #cstmr_pic {
     background-image: url('../img/customer.png');
     width:256px;

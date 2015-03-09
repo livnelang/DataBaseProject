@@ -19,16 +19,17 @@ if (!$conn) {
 
 // Get Parameters From Request
 $emp_id = $_POST["id"];
+echo "$emp_id";
 $emp_phone = $_POST["phone"];
 $emp_mngr = $_POST["managers"];
 $emp_pos = $_POST["position"];
 // Making The Query
 $sql = "UPDATE employee
         SET phone= $emp_phone,Manager_idManager=$emp_mngr,Position_code=$emp_pos
-        WHERE idEmployee ='$emp_id'";
+        WHERE idEmployee =$emp_id ";
 
 //Commit The Query & Check For Results
-if (mysqli_query($conn, $sql)) {
+    if (mysqli_query($conn, $sql)) {
     header('Location: ../view/success_record.html');
     exit;
     echo "New record created successfully";
